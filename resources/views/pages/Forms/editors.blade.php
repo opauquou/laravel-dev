@@ -66,7 +66,7 @@
     <!-- Bootstrap WYSIHTML5 -->
     <script src="{{asset('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
     <!-- CK Editor -->
-    <script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
+    <script src="{{asset('assets\plugins\ckeditor\ckeditor.js')}}"></script>
 @endsection
 
 @section('footer_scripts')
@@ -74,7 +74,7 @@
         $(function () {
             // Replace the <textarea id="editor1"> with a CKEditor
             // instance, using default configuration.
-            //CKEDITOR.replace('editor1');
+            CKEDITOR.replace('editor1');
             //bootstrap WYSIHTML5 - text editor
             $(".textarea").wysihtml5();
         });
