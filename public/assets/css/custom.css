@@ -1,0 +1,25 @@
+[data-notify=container]{
+    /*top: 52px !important;*/
+    border: none;
+}
+
+.main-header .navbar .nav>li>a.lang:focus, .main-header .navbar .nav>li>a.lang:hover{
+    background-color: transparent !important;
+}
+
+.alert.alert-success[data-notify=container]{
+    background-color: #dff0d8 !important;
+    color: #3c763d !important;
+}
+.alert.alert-info[data-notify=container]{
+    background-color: #d9edf7 !important;
+    color: #31708f !important;
+}
+.alert.alert-warning[data-notify=container]{
+    background-color: #fcf8e3 !important;
+    color: #8a6d3b !important;
+}
+.alert.alert-danger[data-notify=container]{
+    background-color: #f2dede !important;
+    color: #a94442 !important;
+}

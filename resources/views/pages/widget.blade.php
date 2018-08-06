@@ -1,16 +1,4 @@
-@extends('layouts.app')
 
-@section('title', 'Widgets')
-
-@section('others_styles')
-
-@endsection
-
-@section('inline_styles')
-
-@endsection
-
-@section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
@@ -838,13 +826,3 @@
         </div><!-- /.row -->
 
     </section><!-- /.content -->
-
-@endsection
-
-@section('others_scripts')
-
-@endsection
-
-@section('footer_scripts')
-
-@endsection

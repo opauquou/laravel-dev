@@ -2,10 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\accountCreate;
+use App\Models\Reservation;
+use App\Models\Vol;
+use App\User;
+use Bpocallaghan\Notify\Facades\Notify;
 use Illuminate\Http\Request;
+use App\Traits\SendMail;
+use Illuminate\Support\Facades\Mail;
+use Validator;
 
 class WelcomeController extends Controller
 {
+    use SendMail;
+
     public function __construct()
     {
 
@@ -29,7 +39,9 @@ class WelcomeController extends Controller
         $data->currentSubMenu = '';
         $data->currentSubMenu1 = '';
 
-        return view('pages.widget', ['data' => $data]);
+        $viewHtml = view('pages.widget', ['data' => $data])->render();
+
+        return response()->json(array('html' => $viewHtml));
     }
 
     public function calendar()
@@ -118,6 +130,58 @@ class WelcomeController extends Controller
         $data->currentSubMenu1 = '';
 
         return view('pages.Charts.inline', ['data' => $data]);
+    }
+
+    public function dataCharts()
+    {
+        $data = new \stdClass();
+        $data->currentMenu = 'charts';
+        $data->currentSubMenu = 'data';
+        $data->currentSubMenu1 = '';
+
+        $vols = Vol::all();
+        $data->vols = $vols;
+
+        return view('pages.Charts.data', ['data' => $data]);
+    }
+
+    public function getDataChartStats(Request $request)
+    {
+        $data = $request->all();
+        $validator = Validator::make($data, [
+           'numVol'     =>  'required|exists:vols,numero',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(array('level' => 'danger', 'msg' => 'Une erreur s\'est produite! Veuillez actualiser puis recommencer.'));
+        }
+
+        try{
+            $dates = $series = [];
+            $vol = Vol::where('numero', $data['numVol'])->first();
+            $arDate = Reservation::select('date')->distinct()->where('vol_id', $vol->id)->orderBy('date', 'asc')->get();
+            $bDate = Reservation::select('date')->distinct()->where('vol_id', $vol->id)->orderBy('date', 'asc')->first();
+            foreach ($arDate as $date){
+                $dates[] = $date->date;
+            }
+            $totalDate = count($dates);
+
+            for($i = 0; $i < $totalDate; $i++){
+                $r = Reservation::where('vol_id', $vol->id)->where('date', $dates[$i])->count();
+                $series[] = $r;
+            }
+
+            if(count($series) != 0){
+                return response()->json(array('success' => true, 'begin' => $bDate, 'series' => $series));
+            }else{
+                return response()->json(array('success' => false,'level' => 'warning', 'msg' => 'Ce Vol n\'a aucune reservation.'));
+            }
+
+        }
+        catch(\Exception $e){
+            return response()->json(array('level' => 'danger', 'msg' => 'Une erreur s\'est produite! Veuillez actualiser puis recommencer.'));
+        }
+
     }
 
 
@@ -300,4 +364,16 @@ class WelcomeController extends Controller
 
         return view('pages.examples.error500', ['data' => $data]);
     }
+
+    public function mail(){
+        $user = User::where('id', 1)->first();
+        $ccEmails = 'warckhen@gmail.com';
+        $bccEmails = 'michel.okou@inpulsion.net';
+        Mail::to($user->email)
+            ->cc($ccEmails)
+            ->bcc($bccEmails)
+            ->send(new accountCreate($user));
+        return redirect('/')->with('success', 'Mail Sent !');
+    }
+
 }

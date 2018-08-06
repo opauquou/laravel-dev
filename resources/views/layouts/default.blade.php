@@ -17,7 +17,7 @@
 
     @yield('others_styles')
 
-    @yield('inline_style')
+    @yield('inline_styles')
 
 </head>
 <body class="hold-transition register-page">

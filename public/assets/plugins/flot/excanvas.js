@@ -1339,7 +1339,7 @@ if (!document.createElement('canvas').getContext) {
     return new CanvasPattern_(image, repetition);
   };
 
-  // Gradient / Pattern Stubs
+  // Gradient / Pattern stubs
   function CanvasGradient_(aType) {
     this.type_ = aType;
     this.x0_ = 0;

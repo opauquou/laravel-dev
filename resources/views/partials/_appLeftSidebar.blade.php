@@ -34,8 +34,8 @@
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
-            <li class="@if(isset($data) && !empty($data->currentMenu) && $data->currentMenu == 'widgets')active @endif">
-                <a href="{{route('widgets')}}">
+            <li class="nav-widgets @if(isset($data) && !empty($data->currentMenu) && $data->currentMenu == 'widgets')active @endif">
+                <a href="javascript:void(0);">
                     <i class="fa fa-th"></i> <span>Widgets</span>
                 </a>
             </li>
@@ -46,7 +46,7 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="@if(isset($data) && !empty($data->currentSubMenu) && $data->currentSubMenu == 'js')active @endif">
+                    <li class="nav-chartJs @if(isset($data) && !empty($data->currentSubMenu) && $data->currentSubMenu == 'js')active @endif">
                         <a href="{{route('jsCharts')}}"><i class="fa fa-circle-o"></i> ChartJS</a>
                     </li>
                     <li class="@if(isset($data) && !empty($data->currentSubMenu) && $data->currentSubMenu == 'morris')active @endif">
@@ -57,6 +57,9 @@
                     </li>
                     <li class="@if(isset($data) && !empty($data->currentSubMenu) && $data->currentSubMenu == 'inline')active @endif">
                         <a href="{{route('inlineCharts')}}"><i class="fa fa-circle-o"></i> Inline charts</a>
+                    </li>
+                    <li class="@if(isset($data) && !empty($data->currentSubMenu) && $data->currentSubMenu == 'data')active @endif">
+                        <a href="{{route('dataCharts')}}"><i class="fa fa-circle-o"></i> Data charts</a>
                     </li>
                 </ul>
             </li>
