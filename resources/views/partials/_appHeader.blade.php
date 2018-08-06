@@ -20,6 +20,8 @@
 
                 {{--@include('partials.__headerMessagesMenu')--}}
 
+                @include('partials.__headerLangMenu')
+
                 @include('partials.__headerNotificationsMenu')
 
                 {{--@include('partials.__headerTasksMenu')--}}
@@ -57,7 +59,10 @@
                                 <a href="{{route('profilePage')}}" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
+                                    <button type="submit" class="btn btn-default btn-flat">Sign out</button>
+                                </form>
                             </div>
                         </li>
                     </ul>
